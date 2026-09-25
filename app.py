@@ -126,6 +126,30 @@ filtered_aspect_df = aspect_df[aspect_df["feedback_id"].isin(filtered_df["feedba
 
 st.sidebar.markdown("---")
 st.sidebar.markdown(f"**Showing Records:** `{len(filtered_df):,}` / `{len(df):,}`")
+
+st.sidebar.markdown("### 📥 Viva Documentation (PDF)")
+pdf_en_path = "Multilingual_Course_Feedback_Intelligence_Viva_Guide_English.pdf"
+if os.path.exists(pdf_en_path):
+    with open(pdf_en_path, "rb") as f_pdf_en:
+        st.sidebar.download_button(
+            "📄 Download Viva Guide (English PDF)",
+            data=f_pdf_en.read(),
+            file_name="Multilingual_Course_Feedback_Intelligence_Viva_Guide_English.pdf",
+            mime="application/pdf",
+            use_container_width=True
+        )
+
+pdf_hi_path = "Multilingual_Course_Feedback_Intelligence_Viva_Guide.pdf"
+if os.path.exists(pdf_hi_path):
+    with open(pdf_hi_path, "rb") as f_pdf_hi:
+        st.sidebar.download_button(
+            "📄 Download Viva Guide (Hinglish PDF)",
+            data=f_pdf_hi.read(),
+            file_name="Multilingual_Course_Feedback_Intelligence_Viva_Guide_Hinglish.pdf",
+            mime="application/pdf",
+            use_container_width=True
+        )
+
 st.sidebar.caption("PRD Capstone v1.0 • Multilingual Course Feedback Intelligence")
 
 # ==========================================

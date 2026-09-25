@@ -1,202 +1,179 @@
-/* Antigravity Modern Dashboard Theme */
+/* ==========================================================================
+   Antigravity Ultra-Modern Glassmorphism Theme for Streamlit Dashboard
+   ========================================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
-html, body, [class*="css"] {
-    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+html, body, [class*="css"], .stApp {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    background-color: #0b0f19 !important;
+    color: #f8fafc !important;
 }
 
-/* Main Container & Top Padding */
+/* Main Container & Top Spacing */
 .block-container {
-    padding-top: 1.8rem;
-    padding-bottom: 3rem;
-    max-width: 1400px;
+    padding-top: 2rem !important;
+    padding-bottom: 3.5rem !important;
+    max-width: 1440px !important;
 }
 
 /* Glassmorphic Metric Cards */
 .metric-card {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.85));
-    border: 1px solid rgba(226, 232, 240, 0.8);
-    border-radius: 14px;
-    padding: 20px 22px;
-    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    margin-bottom: 12px;
+    background: rgba(17, 24, 39, 0.82) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 16px !important;
+    padding: 22px 24px !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease, border-color 0.2s ease !important;
+    margin-bottom: 14px !important;
 }
 
 .metric-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px -4px rgba(0, 0, 0, 0.08);
+    transform: translateY(-3px) !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5) !important;
+    border-color: rgba(99, 102, 241, 0.4) !important;
 }
 
 .metric-label {
-    font-size: 0.82rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: #64748B;
-    margin-bottom: 6px;
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.06em !important;
+    color: #94a3b8 !important;
+    margin-bottom: 8px !important;
 }
 
 .metric-value {
-    font-size: 1.85rem;
-    font-weight: 800;
-    color: #0F172A;
-    line-height: 1.2;
+    font-size: 2.1rem !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.02em !important;
 }
 
 .metric-delta {
-    font-size: 0.82rem;
-    font-weight: 600;
-    margin-top: 6px;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    margin-top: 8px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
 }
 
-.delta-pos { color: #10B981; }
-.delta-neg { color: #EF4444; }
-.delta-neu { color: #64748B; }
+.delta-pos { color: #10b981 !important; }
+.delta-neg { color: #ef4444 !important; }
+.delta-neu { color: #94a3b8 !important; }
 
-/* Insight Banner */
+/* AI Executive Insight Banner */
 .insight-container {
-    background: linear-gradient(135deg, #EEF2FF 0%, #F5F3FF 100%);
-    border: 1px solid #C7D2FE;
-    border-left: 5px solid #4F46E5;
-    border-radius: 12px;
-    padding: 16px 20px;
-    margin: 18px 0 24px 0;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.14) 0%, rgba(6, 182, 212, 0.08) 100%) !important;
+    border: 1px solid rgba(99, 102, 241, 0.35) !important;
+    border-left: 5px solid #6366f1 !important;
+    border-radius: 14px !important;
+    padding: 20px 24px !important;
+    margin: 20px 0 28px 0 !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important;
 }
 
 .insight-header {
-    font-size: 0.92rem;
-    font-weight: 700;
-    color: #3730A3;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
+    font-size: 1rem !important;
+    font-weight: 800 !important;
+    color: #a5b4fc !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin-bottom: 12px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
 }
 
 .insight-item {
-    font-size: 0.88rem;
-    color: #1E1B4B;
-    line-height: 1.5;
-    margin-bottom: 6px;
-    padding-left: 14px;
-    position: relative;
+    font-size: 0.9rem !important;
+    color: #e2e8f0 !important;
+    line-height: 1.6 !important;
+    margin-bottom: 8px !important;
+    padding-left: 18px !important;
+    position: relative !important;
 }
 
 .insight-item::before {
-    content: "•";
-    position: absolute;
-    left: 0;
-    color: #6366F1;
-    font-weight: bold;
+    content: "✦" !important;
+    position: absolute !important;
+    left: 0 !important;
+    color: #6366f1 !important;
+    font-size: 0.85rem !important;
 }
 
 /* Feedback Drilldown Card */
 .feedback-card {
-    background: #FFFFFF;
-    border: 1px solid #E2E8F0;
-    border-radius: 12px;
-    padding: 18px 20px;
-    margin-bottom: 14px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-    transition: border-color 0.2s ease;
+    background: rgba(17, 24, 39, 0.75) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 12px !important;
+    padding: 16px 20px !important;
+    margin-bottom: 12px !important;
+    transition: all 0.2s ease !important;
 }
 
 .feedback-card:hover {
-    border-color: #CBD5E1;
-}
-
-.feedback-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.feedback-meta {
-    font-size: 0.84rem;
-    color: #475569;
-    font-weight: 500;
-}
-
-.badge {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-size: 0.76rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
+    border-color: rgba(99, 102, 241, 0.35) !important;
+    background: rgba(28, 39, 60, 0.85) !important;
 }
 
 .badge-pos {
-    background-color: #ECFDF5;
-    color: #065F46;
-    border: 1px solid #A7F3D0;
+    background: rgba(16, 185, 129, 0.15) !important;
+    color: #10b981 !important;
+    border: 1px solid rgba(16, 185, 129, 0.3) !important;
+    border-radius: 9999px !important;
+    padding: 3px 10px !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
 }
 
 .badge-neg {
-    background-color: #FEF2F2;
-    color: #991B1B;
-    border: 1px solid #FECACA;
+    background: rgba(239, 68, 68, 0.15) !important;
+    color: #ef4444 !important;
+    border: 1px solid rgba(239, 68, 68, 0.3) !important;
+    border-radius: 9999px !important;
+    padding: 3px 10px !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
 }
 
 .badge-neu {
-    background-color: #F8FAFC;
-    color: #475569;
-    border: 1px solid #E2E8F0;
+    background: rgba(245, 158, 11, 0.15) !important;
+    color: #f59e0b !important;
+    border: 1px solid rgba(245, 158, 11, 0.3) !important;
+    border-radius: 9999px !important;
+    padding: 3px 10px !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
 }
 
-.badge-lang {
-    background-color: #F0FDF4;
-    color: #166534;
-    border: 1px solid #BBF7D0;
+/* Sidebar Styling */
+section[data-testid="stSidebar"] {
+    background-color: #0f1523 !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
-.badge-aspect {
-    background-color: #EEF2FF;
-    color: #3730A3;
-    border: 1px solid #C7D2FE;
-    margin-right: 6px;
-    margin-top: 4px;
+/* Tabs */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 8px !important;
+    background-color: rgba(17, 24, 39, 0.6) !important;
+    padding: 6px !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
 }
 
-.badge-emerging {
-    background-color: #FEF3C7;
-    color: #92400E;
-    border: 1px solid #FDE68A;
+.stTabs [data-baseweb="tab"] {
+    border-radius: 8px !important;
+    color: #94a3b8 !important;
+    font-weight: 600 !important;
+    padding: 8px 18px !important;
 }
 
-.badge-declining {
-    background-color: #F1F5F9;
-    color: #475569;
-    border: 1px solid #CBD5E1;
-}
-
-.badge-new {
-    background-color: #FDF2F8;
-    color: #9D174D;
-    border: 1px solid #FBCFE8;
-}
-
-.feedback-text-quote {
-    font-size: 0.95rem;
-    color: #1E293B;
-    line-height: 1.55;
-    margin: 8px 0;
-    font-style: italic;
-    border-left: 3px solid #6366F1;
-    padding-left: 12px;
-}
-
-.aspect-evidence {
-    font-size: 0.82rem;
-    color: #64748B;
-    margin-top: 8px;
-    padding-top: 8px;
-    border-top: 1px dashed #E2E8F0;
+.stTabs [aria-selected="true"] {
+    background: rgba(99, 102, 241, 0.2) !important;
+    color: #818cf8 !important;
+    border-bottom: 2px solid #6366f1 !important;
 }

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multilingual Course Feedback Intelligence | Capstone Analytics</title>
+    <meta name="description" content="AI-Powered Multilingual Course Feedback Intelligence platform with aspect-based sentiment analysis, temporal topic drift, and full-stack interactive feedback management.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand-section">
+                <div class="brand-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="brand-info">
+                    <h2>FeedPulse AI</h2>
+                    <span>Multilingual NLP Intelligence</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <div class="nav-label">Analytics Modules</div>
+                <a href="#overview" class="nav-item active" data-tab="overview" id="nav-overview">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Overview Dashboard</span>
+                </a>
+                <a href="#aspects" class="nav-item" data-tab="aspects" id="nav-aspects">
+                    <i class="fas fa-layer-group"></i>
+                    <span>12-Aspect ABSA</span>
+                </a>
+                <a href="#drift" class="nav-item" data-tab="drift" id="nav-drift">
+                    <i class="fas fa-timeline"></i>
+                    <span>Topic Drift Tracking</span>
+                </a>
+
+                <div class="nav-label">Interactive Operations</div>
+                <a href="#feedback" class="nav-item" data-tab="feedback" id="nav-feedback">
+                    <i class="fas fa-table-list"></i>
+                    <span>Feedback Management</span>
+                </a>
+                <a href="#sandbox" class="nav-item" data-tab="sandbox" id="nav-sandbox">
+                    <i class="fas fa-flask"></i>
+                    <span>Live AI Sandbox</span>
+                </a>
+                <a href="#viva" class="nav-item" data-tab="viva" id="nav-viva">
+                    <i class="fas fa-file-pdf"></i>
+                    <span>Viva & Documentation</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="system-status">
+                    <div class="status-dot"></div>
+                    <div>
+                        <strong style="color:var(--text-primary); font-size:0.8rem; display:block;">NLP Pipeline Active</strong>
+                        <span style="font-size:0.7rem;">Accuracy: 98.45% • F1: 98.24%</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <div>
+                        <h1 class="page-title" id="header-title">Executive Intelligence Overview</h1>
+                        <p class="page-subtitle" id="header-subtitle">Institutional metrics, sentiment distributions & automated AI insights</p>
+                    </div>
+                </div>
+
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="btn-open-add-modal">
+                        <i class="fas fa-plus"></i>
+                        <span>Add Feedback</span>
+                    </button>
+
+                    <a href="http://127.0.0.1:8501" target="_blank" class="btn btn-secondary" title="Open Streamlit Dashboard">
+                        <i class="fas fa-external-link-alt"></i>
+                        <span>Streamlit View</span>
+                    </a>
+
+                    <button class="btn-icon" id="btn-toggle-theme" title="Toggle Dark/Light Mode">
+                        <i class="fas fa-sun" id="theme-toggle-icon"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Main Content Body -->
+            <main class="content-body">
+                <!-- TAB 1: EXECUTIVE OVERVIEW -->
+                <section class="tab-pane active" id="tab-overview">
+                    <!-- KPI Cards -->
+                    <div class="kpi-grid">
+                        <div class="kpi-card">
+                            <div class="kpi-top">
+                                <span class="kpi-label">Total Student Reviews</span>
+                                <div class="kpi-icon-wrap"><i class="fas fa-comments"></i></div>
+                            </div>
+                            <div class="kpi-value" id="kpi-total-feedback">--</div>
+                            <div class="kpi-subtext"><i class="fas fa-check-double" style="color:var(--color-positive);"></i> 4 Normalized SQLite Tables</div>
+                        </div>
+
+                        <div class="kpi-card cyan">
+                            <div class="kpi-top">
+                                <span class="kpi-label">Average Satisfaction</span>
+                                <div class="kpi-icon-wrap"><i class="fas fa-star"></i></div>
+                            </div>
+                            <div class="kpi-value" id="kpi-avg-rating">--</div>
+                            <div class="kpi-subtext"><i class="fas fa-chart-line"></i> Institutional Rating Score</div>
+                        </div>
+
+                        <div class="kpi-card positive">
+                            <div class="kpi-top">
+                                <span class="kpi-label">Positive Sentiment</span>
+                                <div class="kpi-icon-wrap"><i class="fas fa-smile"></i></div>
+                            </div>
+                            <div class="kpi-value" id="kpi-positive-pct">--</div>
+                            <div class="kpi-subtext"><i class="fas fa-arrow-up"></i> Satisfied Learner Ratio</div>
+                        </div>
+
+                        <div class="kpi-card negative">
+                            <div class="kpi-top">
+                                <span class="kpi-label">Negative Sentiment</span>
+                                <div class="kpi-icon-wrap"><i class="fas fa-frown"></i></div>
+                            </div>
+                            <div class="kpi-value" id="kpi-negative-pct">--</div>
+                            <div class="kpi-subtext"><i class="fas fa-exclamation-circle"></i> Requires Course Attention</div>
+                        </div>
+
+                        <div class="kpi-card warning">
+                            <div class="kpi-top">
+                                <span class="kpi-label">Monitored Courses</span>
+                                <div class="kpi-icon-wrap"><i class="fas fa-book-open"></i></div>
+                            </div>
+                            <div class="kpi-value" id="kpi-active-courses">--</div>
+                            <div class="kpi-subtext"><i class="fas fa-globe"></i> EN, HI & Hinglish</div>
+                        </div>
+                    </div>
+
+                    <!-- AI Insights Banner -->
+                    <div class="insights-banner">
+                        <div class="insights-header">
+                            <span class="ai-chip"><i class="fas fa-sparkles"></i> AI Generated Intelligence</span>
+                            <h3 class="insights-title">Automated Institutional Recommendations</h3>
+                        </div>
+                        <div class="insights-list" id="insights-container">
+                            <!-- Populated dynamically via app.js -->
+                        </div>
+                    </div>
+
+                    <!-- Chart Grid Row 1 -->
+                    <div class="chart-grid-2">
+                        <div class="glass-card">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-pie-chart"></i> Sentiment Distribution</h3>
+                                <span class="card-badge">TF-IDF + Calibrated LinearSVC</span>
+                            </div>
+                            <div class="chart-canvas-wrap">
+                                <canvas id="chart-sentiment"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="glass-card">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-language"></i> Language Composition</h3>
+                                <span class="card-badge">Trilingual Detection Engine</span>
+                            </div>
+                            <div class="chart-canvas-wrap">
+                                <canvas id="chart-language"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chart Grid Row 2 -->
+                    <div class="chart-grid-2">
+                        <div class="glass-card">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-star-half-alt"></i> Rating Breakdown (1 - 5 Stars)</h3>
+                                <span class="card-badge">Institutional Likert Scale</span>
+                            </div>
+                            <div class="chart-canvas-wrap">
+                                <canvas id="chart-ratings"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="glass-card">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-award"></i> Course Satisfaction Leaderboard</h3>
+                                <span class="card-badge">% Positive Ratio</span>
+                            </div>
+                            <div class="chart-canvas-wrap">
+                                <canvas id="chart-leaderboard"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Top Courses Table -->
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-list-ol"></i> Top Course Satisfaction Rankings</h3>
+                            <span class="card-badge">Direct SQLite Aggregation</span>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Course Code</th>
+                                        <th>Course Name</th>
+                                        <th>Total Reviews</th>
+                                        <th>Avg Rating</th>
+                                        <th>Sentiment Breakdown</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="leaderboard-tbody">
+                                    <!-- Populated via app.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 2: 12-ASPECT ABSA -->
+                <section class="tab-pane" id="tab-aspects">
+                    <div class="chart-grid-2">
+                        <div class="glass-card">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-chart-bar"></i> 12 Pedagogical Aspects (Net Score)</h3>
+                                <span class="card-badge">Positive% minus Negative%</span>
+                            </div>
+                            <div class="chart-canvas-wrap" style="height: 400px;">
+                                <canvas id="chart-aspects-bar"></canvas>
+                            </div>
+                        </div>
+
+                        <div style="display:flex; flex-direction:column; gap:20px;">
+                            <div class="glass-card">
+                                <div class="card-header">
+                                    <h3 class="card-title" style="color:var(--color-positive);"><i class="fas fa-thumbs-up"></i> Top Institutional Strengths</h3>
+                                    <span class="card-badge">Highest Net Score</span>
+                                </div>
+                                <div id="aspects-strengths-list" style="display:flex; flex-direction:column; gap:12px;">
+                                    <!-- Populated via app.js -->
+                                </div>
+                            </div>
+
+                            <div class="glass-card">
+                                <div class="card-header">
+                                    <h3 class="card-title" style="color:var(--color-negative);"><i class="fas fa-exclamation-circle"></i> Priority Action Areas (Pain Points)</h3>
+                                    <span class="card-badge">Highest Complaints</span>
+                                </div>
+                                <div id="aspects-pain-list" style="display:flex; flex-direction:column; gap:12px;">
+                                    <!-- Populated via app.js -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course x Aspect Heatmap Matrix -->
+                    <div class="glass-card" style="margin-top:28px;">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-th"></i> Course-Aspect Sentiment Matrix</h3>
+                            <span class="card-badge">Net Sentiment % (Green = Praise, Red = Concerns)</span>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="custom-table" id="heatmap-table">
+                                <thead id="heatmap-thead"></thead>
+                                <tbody id="heatmap-tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 3: TOPIC DRIFT TRACKING -->
+                <section class="tab-pane" id="tab-drift">
+                    <div class="glass-card" style="margin-bottom:28px;">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-line-chart"></i> Temporal Topic Drift (Semesters 1 to 6)</h3>
+                            <span class="card-badge">Proportion of Student Discourse over Time</span>
+                        </div>
+                        <div class="chart-canvas-wrap" style="height: 380px;">
+                            <canvas id="chart-drift-timeline"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Topic Trajectory Classifications Table -->
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-compass"></i> BERTopic Trajectory Classifications</h3>
+                            <span class="card-badge">Linear Regression Slope Thresholds (&plusmn;0.015)</span>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Topic Name</th>
+                                        <th>Trajectory Status</th>
+                                        <th>Slope / Semester</th>
+                                        <th>Initial Sem Proportion</th>
+                                        <th>Final Sem Proportion</th>
+                                        <th>Net Change</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="drift-tbody">
+                                    <!-- Populated via app.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 4: FEEDBACK MANAGEMENT (CRUD) -->
+                <section class="tab-pane" id="tab-feedback">
+                    <!-- Filter Controls -->
+                    <div class="filter-bar">
+                        <div class="search-input-wrap">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="filter-search" placeholder="Search feedback text, course name or keywords...">
+                        </div>
+
+                        <select class="select-filter" id="filter-course">
+                            <option value="All">All Courses</option>
+                            <option value="Full-Stack Web Development">Full-Stack Web Development</option>
+                            <option value="Artificial Intelligence & Robotics">Artificial Intelligence & Robotics</option>
+                            <option value="Data Structures & Algorithms">Data Structures & Algorithms</option>
+                            <option value="Machine Learning & Neural Networks">Machine Learning & Neural Networks</option>
+                            <option value="Introduction to Programming">Introduction to Programming</option>
+                            <option value="Database Management Systems">Database Management Systems</option>
+                            <option value="Software Engineering & Architecture">Software Engineering & Architecture</option>
+                            <option value="Computer Networks & Security">Computer Networks & Security</option>
+                        </select>
+
+                        <select class="select-filter" id="filter-semester">
+                            <option value="All">All Semesters</option>
+                            <option value="Semester 1">Semester 1</option>
+                            <option value="Semester 2">Semester 2</option>
+                            <option value="Semester 3">Semester 3</option>
+                            <option value="Semester 4">Semester 4</option>
+                            <option value="Semester 5">Semester 5</option>
+                            <option value="Semester 6">Semester 6</option>
+                        </select>
+
+                        <select class="select-filter" id="filter-language">
+                            <option value="All">All Languages</option>
+                            <option value="English">English</option>
+                            <option value="Hindi">Hindi</option>
+                            <option value="Hinglish">Hinglish</option>
+                        </select>
+
+                        <select class="select-filter" id="filter-sentiment">
+                            <option value="All">All Sentiments</option>
+                            <option value="Positive">Positive</option>
+                            <option value="Negative">Negative</option>
+                            <option value="Neutral">Neutral</option>
+                        </select>
+
+                        <button class="btn btn-primary" onclick="openAddModal()">
+                            <i class="fas fa-plus"></i>
+                            <span>Add Feedback</span>
+                        </button>
+                    </div>
+
+                    <!-- Records Table Card -->
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-database"></i> Student Feedback Records</h3>
+                            <span class="card-badge" id="feedback-total-count">Loading records...</span>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID / Student</th>
+                                        <th>Course & Semester</th>
+                                        <th>Overall Sentiment</th>
+                                        <th>Language</th>
+                                        <th>Rating</th>
+                                        <th>Feedback Comment & Detected Aspects</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="feedback-tbody">
+                                    <!-- Populated via app.js -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination Controls -->
+                        <div class="pagination-container">
+                            <div class="pagination-info" id="feedback-page-info">Page 1 of 1</div>
+                            <div class="pagination-buttons">
+                                <button class="btn btn-secondary" id="btn-prev-page" disabled>
+                                    <i class="fas fa-chevron-left"></i> Previous
+                                </button>
+                                <button class="btn btn-secondary" id="btn-next-page">
+                                    Next <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 5: LIVE AI SANDBOX -->
+                <section class="tab-pane" id="tab-sandbox">
+                    <div class="sandbox-container">
+                        <!-- Left: Input & Presets -->
+                        <div class="glass-card">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-flask"></i> Multilingual Input Console</h3>
+                                <span class="card-badge">Zero-Shot + Lexicon Matching</span>
+                            </div>
+
+                            <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:14px;">
+                                Type or paste student feedback in <strong>English</strong>, <strong>Hindi (Devanagari)</strong>, or <strong>Hinglish (Romanized Hindi)</strong>:
+                            </p>
+
+                            <div class="sandbox-presets">
+                                <span class="preset-chip">Hinglish Complaint</span>
+                                <span class="preset-chip">English Praise</span>
+                                <span class="preset-chip">Hinglish Mixed Feedback</span>
+                                <span class="preset-chip">Curriculum & Infrastructure</span>
+                            </div>
+
+                            <div class="form-group">
+                                <textarea id="sandbox-input-text" class="form-control" style="min-height: 140px;" placeholder="e.g. Ye course bohot bekaar tha, professor kabhi time pe nahi aate aur assignments bohot tough the."></textarea>
+                            </div>
+
+                            <button class="btn btn-primary" id="btn-run-sandbox" style="width: 100%;">
+                                <i class="fas fa-bolt"></i>
+                                <span>Analyze Multilingual Feedback</span>
+                            </button>
+                        </div>
+
+                        <!-- Right: Real-Time Pipeline Results -->
+                        <div class="glass-card" id="sandbox-result-card">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-microchip"></i> Real-Time NLP Pipeline Output</h3>
+                                <span class="card-badge">Step-by-Step Inference</span>
+                            </div>
+
+                            <!-- Step 1: Language Detection -->
+                            <div class="nlp-pipeline-step">
+                                <div class="nlp-step-header">
+                                    <span>Step 1: Language & Script Detection</span>
+                                    <span id="sandbox-lang-conf">--</span>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; align-items:center;">
+                                    <strong id="sandbox-lang-badge" class="badge badge-lang">--</strong>
+                                </div>
+                                <div class="confidence-bar"><div class="confidence-fill" id="sandbox-lang-fill" style="width: 0%;"></div></div>
+                            </div>
+
+                            <!-- Step 2: Translation Normalization -->
+                            <div class="nlp-pipeline-step">
+                                <div class="nlp-step-header">
+                                    <span>Step 2: Pipeline A Normalization (English Mapping)</span>
+                                </div>
+                                <div id="sandbox-translation-text" style="font-family:'JetBrains Mono', monospace; font-size:0.85rem; color:var(--text-primary); word-break:break-word;">
+                                    --
+                                </div>
+                            </div>
+
+                            <!-- Step 3: Overall Sentiment -->
+                            <div class="nlp-pipeline-step">
+                                <div class="nlp-step-header">
+                                    <span>Step 3: Sentiment Classification</span>
+                                    <span id="sandbox-sent-conf">--</span>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; align-items:center;">
+                                    <span id="sandbox-sent-badge" class="badge">--</span>
+                                </div>
+                                <div class="confidence-bar"><div class="confidence-fill" id="sandbox-sent-fill" style="width: 0%;"></div></div>
+                            </div>
+
+                            <!-- Step 4: 12-Aspect ABSA -->
+                            <div class="nlp-pipeline-step" style="margin-bottom:0;">
+                                <div class="nlp-step-header">
+                                    <span>Step 4: Extracted Pedagogical Aspects</span>
+                                </div>
+                                <div id="sandbox-aspects-list">
+                                    <div style="color:var(--text-muted); font-size:0.85rem;">Click 'Analyze' to extract pedagogical aspects.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 6: VIVA DOCUMENTATION & ARCHITECTURE -->
+                <section class="tab-pane" id="tab-viva">
+                    <div class="chart-grid-2" style="margin-bottom:28px;">
+                        <!-- English PDF Card -->
+                        <div class="glass-card" style="border-left: 4px solid var(--primary);">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-file-pdf"></i> Complete Viva Documentation (English)</h3>
+                                <span class="card-badge">Formal Academic Report</span>
+                            </div>
+                            <p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:18px;">
+                                Professional academic viva documentation covering research problem, methodology, mathematical formulations, Pipeline A vs B comparison, and evaluation benchmarks.
+                            </p>
+                            <a href="/api/download/pdf/english" class="btn btn-primary" download>
+                                <i class="fas fa-download"></i> Download English Viva PDF
+                            </a>
+                        </div>
+
+                        <!-- Hinglish PDF Card -->
+                        <div class="glass-card" style="border-left: 4px solid var(--secondary);">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-file-lines"></i> Viva Preparation Guide (Hinglish)</h3>
+                                <span class="card-badge">Intuitive Viva Q&A</span>
+                            </div>
+                            <p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:18px;">
+                                Complete viva preparation guide in intuitive Hinglish with anticipated examiner questions, counter-arguments, and easy-to-understand explanations.
+                            </p>
+                            <a href="/api/download/pdf/hinglish" class="btn btn-secondary" download>
+                                <i class="fas fa-download"></i> Download Hinglish Viva PDF
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- System Architecture Summary -->
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-network-wired"></i> End-to-End System Architecture</h3>
+                            <span class="card-badge">Production Capstone Design</span>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 10px;">
+                            <div class="insight-item">
+                                <div class="insight-icon" style="color:var(--primary);"><i class="fas fa-database"></i></div>
+                                <div class="insight-content">
+                                    <h4>1. Multilingual Corpus</h4>
+                                    <p>2,200 synthetic student evaluations across 7 courses, 6 semesters, and 3 languages (EN, HI, Hinglish).</p>
+                                </div>
+                            </div>
+
+                            <div class="insight-item">
+                                <div class="insight-icon" style="color:var(--secondary);"><i class="fas fa-spell-check"></i></div>
+                                <div class="insight-content">
+                                    <h4>2. Trilingual Preprocessor</h4>
+                                    <p>Negation preservation ("nahi", "mat", "not"), Unicode Devanagari normalization, and phoneme mapping.</p>
+                                </div>
+                            </div>
+
+                            <div class="insight-item">
+                                <div class="insight-icon" style="color:var(--color-positive);"><i class="fas fa-filter"></i></div>
+                                <div class="insight-content">
+                                    <h4>3. 12-Aspect ABSA Engine</h4>
+                                    <p>Comprehensive rule & semantic lexicon mapping capturing Course Content, Labs, Grading, Instructor, etc.</p>
+                                </div>
+                            </div>
+
+                            <div class="insight-item">
+                                <div class="insight-icon" style="color:var(--accent-purple);"><i class="fas fa-chart-area"></i></div>
+                                <div class="insight-content">
+                                    <h4>4. BERTopic Temporal Drift</h4>
+                                    <p>Classifies topics into Emerging, Declining, Persistent, and New based on linear regression slopes across semesters.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- ADD FEEDBACK MODAL (CRUD) -->
+    <div class="modal-overlay" id="add-feedback-modal">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-comment-medical" style="color:var(--primary);"></i> Add Student Feedback</h3>
+                <button class="modal-close" id="btn-close-modal"><i class="fas fa-times"></i></button>
+            </div>
+
+            <form id="add-feedback-form">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label" for="new-course-select">Select Course</label>
+                        <select id="new-course-select" class="form-control" required>
+                            <option value="WD102">Full-Stack Web Development</option>
+                            <option value="AI401">Artificial Intelligence & Robotics</option>
+                            <option value="DS201">Data Structures & Algorithms</option>
+                            <option value="ML301">Machine Learning & Neural Networks</option>
+                            <option value="CS101">Introduction to Programming</option>
+                            <option value="DB202">Database Management Systems</option>
+                            <option value="SE303">Software Engineering & Architecture</option>
+                            <option value="CN204">Computer Networks & Security</option>
+                        </select>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+                        <div class="form-group">
+                            <label class="form-label" for="new-semester-select">Academic Semester</label>
+                            <select id="new-semester-select" class="form-control" required>
+                                <option value="Semester 1">Semester 1</option>
+                                <option value="Semester 2">Semester 2</option>
+                                <option value="Semester 3">Semester 3</option>
+                                <option value="Semester 4">Semester 4</option>
+                                <option value="Semester 5">Semester 5</option>
+                                <option value="Semester 6" selected>Semester 6</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Student Rating</label>
+                            <div class="star-rating-picker" id="star-picker">
+                                <i class="fas fa-star active" data-value="1"></i>
+                                <i class="fas fa-star active" data-value="2"></i>
+                                <i class="fas fa-star active" data-value="3"></i>
+                                <i class="fas fa-star active" data-value="4"></i>
+                                <i class="fas fa-star active" data-value="5"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="new-feedback-text">Feedback Comment (Multilingual)</label>
+                        <textarea id="new-feedback-text" class="form-control" placeholder="Write feedback in English, Hindi, or Hinglish (e.g., Professor explained topics very clearly lekin assignments bohot lengthy the...)" required></textarea>
+                        <small style="color:var(--text-muted); font-size:0.75rem; margin-top:4px; display:block;">
+                            Language detection, overall sentiment, 12-aspect sentiment, and topic will be assigned automatically upon submission.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="btn-cancel-modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="btn-submit-feedback">
+                        <i class="fas fa-check"></i> Analyze & Save Feedback
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/charts.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>
