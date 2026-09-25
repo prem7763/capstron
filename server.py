@@ -434,6 +434,10 @@ if os.path.exists(FRONTEND_DIR):
     app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
 
 if __name__ == "__main__":
+    import threading
+    import time
+    import webbrowser
+
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
     print("=" * 70)
@@ -441,4 +445,13 @@ if __name__ == "__main__":
     print("Web Frontend: http://127.0.0.1:8000")
     print("Swagger Docs: http://127.0.0.1:8000/docs")
     print("=" * 70)
+
+    def _open_when_ready():
+        time.sleep(1.5)
+        try:
+            webbrowser.open("http://127.0.0.1:8000")
+        except Exception:
+            pass
+
+    threading.Thread(target=_open_when_ready, daemon=True).start()
     uvicorn.run(app, host="127.0.0.1", port=8000)
