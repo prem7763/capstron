@@ -52,7 +52,16 @@ c:\Users\bhara\capstron\
 │   │   └── db_manager.py                   # SQLite schema & high-speed indexed queries
 │   └── data_generation/
 │       └── generate_synthetic.py           # Realistic multilingual dataset generator
-├── app.py                                  # Streamlit web application (All 6 PRD views + sandbox)
+├── frontend/                               # Ultra-Modern Web Frontend (SPA)
+│   ├── index.html                          # Responsive SPA with dual-theme (Dark/Light)
+│   ├── css/style.css                       # Glassmorphic CSS design system
+│   └── js/
+│       ├── app.js                          # State management, live CRUD & sandbox logic
+│       └── charts.js                       # Chart.js visualization engine
+├── server.py                               # FastAPI REST backend (CRUD + Real-time NLP inference)
+├── run_webapp.bat                          # One-click launcher for Web App (Port 8000)
+├── app.py                                  # Streamlit web application (Port 8501)
+├── run_dashboard.bat                       # One-click launcher for Streamlit Dashboard
 ├── run_pipeline.py                         # End-to-end CLI pipeline runner
 ├── evaluate.py                             # Evaluation benchmark suite (PRD §11)
 ├── styles.css                              # Glassmorphic custom CSS styling
@@ -96,11 +105,24 @@ python evaluate.py
 ```
 Outputs validation accuracy, Macro F1, aspect precision/recall, topic coherence ($c_v$), and Pipeline A vs B benchmarks to `evaluation_report.json`.
 
-### 4. Launch the Interactive Dashboard
+### 4. Launch Applications
+
+#### A. Modern Full-Stack Web App (Recommended)
+Interactive single-page application with dark glassmorphism, live CRUD (Add/Delete feedback), Chart.js visualizations, and real-time AI Sandbox.
+```bash
+python server.py
+# Or double-click: run_webapp.bat
+```
+👉 Open **[http://127.0.0.1:8000](http://127.0.0.1:8000)** in your browser.  
+👉 Swagger REST API Docs: **[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)**
+
+#### B. Streamlit Analytics Dashboard
+Alternative analytical view with multi-dimensional filtering and report generation.
 ```bash
 streamlit run app.py
+# Or double-click: run_dashboard.bat
 ```
-Open [http://localhost:8501](http://localhost:8501) in your browser.
+👉 Open **[http://localhost:8501](http://localhost:8501)** in your browser.
 
 ---
 
