@@ -1,0 +1,188 @@
+{
+  "sentiment_classification": {
+    "accuracy": 0.9845,
+    "macro_precision": 0.9878,
+    "macro_recall": 0.9776,
+    "macro_f1": 0.9824,
+    "weighted_f1": 0.9845,
+    "per_class": {
+      "Positive": {
+        "precision": 0.9962,
+        "recall": 0.995,
+        "f1_score": 0.9956,
+        "support": 793
+      },
+      "Negative": {
+        "precision": 0.9976,
+        "recall": 0.9421,
+        "f1_score": 0.9691,
+        "support": 449
+      },
+      "Neutral": {
+        "precision": 0.9695,
+        "recall": 0.9958,
+        "f1_score": 0.9825,
+        "support": 958
+      }
+    },
+    "confusion_matrix": [
+      [
+        789,
+        0,
+        4
+      ],
+      [
+        0,
+        423,
+        26
+      ],
+      [
+        3,
+        1,
+        954
+      ]
+    ],
+    "labels": [
+      "Positive",
+      "Negative",
+      "Neutral"
+    ]
+  },
+  "aspect_detection": {
+    "macro_precision": 1.0,
+    "macro_recall": 0.9959,
+    "macro_f1": 0.9979,
+    "per_aspect": {
+      "Teaching Quality": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 339
+      },
+      "Course Content": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 340
+      },
+      "Assignments": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 337
+      },
+      "Exams": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 383
+      },
+      "Difficulty": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 349
+      },
+      "Lecture Pace": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 349
+      },
+      "Faculty Support": {
+        "precision": 1.0,
+        "recall": 0.9973,
+        "f1_score": 0.9987,
+        "support": 373
+      },
+      "Practical Sessions": {
+        "precision": 1.0,
+        "recall": 0.9942,
+        "f1_score": 0.9971,
+        "support": 347
+      },
+      "Projects": {
+        "precision": 1.0,
+        "recall": 0.9941,
+        "f1_score": 0.9971,
+        "support": 341
+      },
+      "Study Material": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 374
+      },
+      "Infrastructure": {
+        "precision": 1.0,
+        "recall": 0.9972,
+        "f1_score": 0.9986,
+        "support": 353
+      },
+      "Evaluation": {
+        "precision": 1.0,
+        "recall": 0.968,
+        "f1_score": 0.9837,
+        "support": 375
+      }
+    }
+  },
+  "topic_modeling": {
+    "Semantic_BERTopic": {
+      "topic_diversity": 0.8625,
+      "topic_coherence_npmi": -0.224,
+      "human_readable_naming": true
+    },
+    "LDA_Baseline": {
+      "topic_diversity": 0.85,
+      "topic_coherence_npmi": -0.1279,
+      "perplexity": 246.95,
+      "human_readable_naming": false
+    },
+    "NMF_Baseline": {
+      "topic_diversity": 0.975,
+      "topic_coherence_npmi": -0.2399,
+      "reconstruction_error": 43.289,
+      "human_readable_naming": false
+    }
+  },
+  "multilingual_normalization_benchmark": {
+    "num_samples_evaluated": 500,
+    "pipeline_a": {
+      "name": "Pipeline A: Translate / Transliterate to English",
+      "duration_seconds": 0.0175,
+      "throughput_records_per_sec": 28640.7,
+      "vocab_size": 798,
+      "matrix_sparsity_percent": 97.66,
+      "strengths": "Direct interoperability with English sentiment lexicons & BERT models, highly interpretable topic names.",
+      "tradeoffs": "Requires translation lexicon maintenance."
+    },
+    "pipeline_b": {
+      "name": "Pipeline B: Direct Multilingual Character / Word Representation",
+      "duration_seconds": 0.063,
+      "throughput_records_per_sec": 7933.7,
+      "vocab_size": 5000,
+      "matrix_sparsity_percent": 95.62,
+      "strengths": "Zero translation overhead, preserves original colloquial nuances and code-switching tokens.",
+      "tradeoffs": "Higher dimensional feature matrix, multilingual vocabulary overlap challenges."
+    },
+    "recommendation": "Pipeline A achieves higher semantic cohesion for downstream ABSA and topic labeling, while Pipeline B provides low-latency baseline embeddings."
+  },
+  "cross_language_diagnostics": {
+    "English": {
+      "accuracy": 0.9881,
+      "macro_f1": 0.9861,
+      "records": 1097
+    },
+    "Hindi": {
+      "accuracy": 0.9713,
+      "macro_f1": 0.9688,
+      "records": 523
+    },
+    "Hinglish": {
+      "accuracy": 0.9897,
+      "macro_f1": 0.9878,
+      "records": 580
+    }
+  }
+}
