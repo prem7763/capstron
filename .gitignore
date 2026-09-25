@@ -22,3 +22,4 @@ ENV/
 Thumbs.db
 *.log
 *.pdf
+generate_viva_pdf*.py
