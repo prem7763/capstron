@@ -437,9 +437,23 @@ if __name__ == "__main__":
     import threading
     import time
     import webbrowser
+    import subprocess
 
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
+
+    # Ensure port 8000 is free from stale processes
+    try:
+        res = subprocess.run('netstat -ano | findstr ":8000" | findstr "LISTENING"', shell=True, capture_output=True, text=True)
+        for line in res.stdout.strip().splitlines():
+            parts = line.split()
+            if parts:
+                pid = parts[-1]
+                if pid and pid != str(os.getpid()):
+                    subprocess.run(f"taskkill /F /PID {pid}", shell=True, capture_output=True)
+    except Exception:
+        pass
+
     print("=" * 70)
     print("LAUNCHING FULL-STACK FASTAPI BACKEND SERVER")
     print("Web Frontend: http://127.0.0.1:8000")
