@@ -23,3 +23,20 @@ Thumbs.db
 *.log
 *.pdf
 generate_viva_pdf*.py
+
+# Scratch, dumps and reference backups
+rajan_*.txt
+RetentionIQ_Final_Blackbook*
+Prem&Ayushu*
+Multilingual_Course_Feedback_Intelligence_Blackbook.docx
+apply_beena_mam_corrections.py
+build_capstone_blackbook.py
+check_after_820.py
+clean_remaining_17.py
+edit_rajan_blackbook_in_place.py
+finalize_rajan_blackbook.py
+fix_references_*.py
+rewrite_complete_blackbook.py
+set_clean_20_references.py
+update_chapters_*.py
+verify_*.py
