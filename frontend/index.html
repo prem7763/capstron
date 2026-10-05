@@ -87,6 +87,11 @@
                 </div>
 
                 <div class="header-actions">
+                    <div id="server-status-badge" style="display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:20px; font-size:0.78rem; font-weight:600; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#34d399;">
+                        <span class="status-pulse" style="width:8px; height:8px; border-radius:50%; background:#10b981; display:inline-block;"></span>
+                        <span id="server-status-text"><i class="fas fa-circle-notch fa-spin"></i> Checking Server...</span>
+                    </div>
+
                     <button class="btn btn-primary" id="btn-open-add-modal">
                         <i class="fas fa-plus"></i>
                         <span>Add Feedback</span>

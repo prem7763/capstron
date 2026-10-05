@@ -3,6 +3,38 @@
  * Powers navigation, CRUD operations, live NLP predictions, and data bindings.
  */
 
+// Base API configuration (guarantees connectivity whether loaded via http://127.0.0.1:8000, localhost, Live Server, or file:///)
+const API_BASE = (window.location.protocol === 'file:' || (window.location.port !== '8000' && window.location.port !== ''))
+    ? 'http://127.0.0.1:8000'
+    : '';
+
+async function checkServerHealth() {
+    const badge = document.getElementById('server-status-badge');
+    const text = document.getElementById('server-status-text');
+    const pulse = badge ? badge.querySelector('.status-pulse') : null;
+    try {
+        const res = await fetch(`${API_BASE}/api/overview`);
+        if (res.ok) {
+            if (badge) {
+                badge.style.background = 'rgba(16,185,129,0.15)';
+                badge.style.border = '1px solid rgba(16,185,129,0.4)';
+                badge.style.color = '#34d399';
+            }
+            if (pulse) pulse.style.background = '#10b981';
+            if (text) text.innerHTML = '<i class="fas fa-check-circle"></i> Server: Online (Port 8000)';
+            return true;
+        }
+    } catch (_) {}
+    if (badge) {
+        badge.style.background = 'rgba(239,68,68,0.18)';
+        badge.style.border = '1px solid rgba(239,68,68,0.5)';
+        badge.style.color = '#f87171';
+    }
+    if (pulse) pulse.style.background = '#ef4444';
+    if (text) text.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Server Offline (Run: python server.py)';
+    return false;
+}
+
 // Application State
 const AppState = {
     currentTab: 'overview',
@@ -32,6 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
     setupNavigation();
     setupRatingPicker();
     setupLiveSandbox();
+
+    // Check server health & keep monitor active
+    checkServerHealth();
+    setInterval(checkServerHealth, 5000);
 
     // Initial Data Load
     loadOverview();
@@ -114,7 +150,7 @@ function switchTab(tabId) {
 // 1. Load Overview Dashboard
 async function loadOverview() {
     try {
-        const res = await fetch('/api/overview');
+        const res = await fetch(`${API_BASE}/api/overview`);
         if (!res.ok) throw new Error('Failed to load overview data');
         const data = await res.json();
         AppState.overviewData = data;
@@ -237,7 +273,7 @@ function renderLeaderboardTable(courses) {
 // 2. Load 12-Aspect Analysis
 async function loadAspects() {
     try {
-        const res = await fetch('/api/aspects');
+        const res = await fetch(`${API_BASE}/api/aspects`);
         if (!res.ok) throw new Error('Failed to load aspect data');
         const data = await res.json();
         AppState.aspectsData = data;
@@ -325,7 +361,7 @@ function renderAspectHeatmapTable(heatmap) {
 // 3. Load Topic Drift Analytics
 async function loadDrift() {
     try {
-        const res = await fetch('/api/drift');
+        const res = await fetch(`${API_BASE}/api/drift`);
         if (!res.ok) throw new Error('Failed to load drift data');
         const data = await res.json();
         AppState.driftData = data;
@@ -376,7 +412,7 @@ async function loadFeedback() {
             search: f.search
         });
 
-        const res = await fetch(`/api/feedback?${queryParams.toString()}`);
+        const res = await fetch(`${API_BASE}/api/feedback?${queryParams.toString()}`);
         if (!res.ok) throw new Error('Failed to fetch feedback records');
         const data = await res.json();
 
@@ -441,7 +477,7 @@ async function deleteFeedbackRecord(feedbackId) {
     }
 
     try {
-        const res = await fetch(`/api/feedback/${feedbackId}`, { method: 'DELETE' });
+        const res = await fetch(`${API_BASE}/api/feedback/${feedbackId}`, { method: 'DELETE' });
         if (!res.ok) throw new Error('Delete request failed');
         const data = await res.json();
 
@@ -508,7 +544,7 @@ async function handleAddFeedbackSubmit(e) {
             feedback_text: feedbackText
         };
 
-        const res = await fetch('/api/feedback', {
+        const res = await fetch(`${API_BASE}/api/feedback`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
@@ -576,7 +612,7 @@ async function runLiveSandbox() {
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running Full NLP Pipeline...';
 
     try {
-        const res = await fetch('/api/predict', {
+        const res = await fetch(`${API_BASE}/api/predict`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ text: text })
