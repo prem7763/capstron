@@ -113,7 +113,7 @@ class SentimentClassifier:
             continuous_score = round(float(probs[pos_idx] - probs[neg_idx]), 3)
 
             return {
-                "sentiment": pred,
+                "sentiment": str(pred),
                 "confidence": round(conf, 2),
                 "score": continuous_score
             }

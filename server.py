@@ -321,44 +321,51 @@ def add_new_feedback(req: NewFeedbackRequest):
     # 4. Aspect-Based Sentiment Analysis (12 Dimensions)
     detected_aspects = aspect_extractor.analyze_aspects(raw_text)
 
-    # 5. Generate IDs
-    with get_db_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute("SELECT COUNT(*) FROM Feedback")
-        cnt = cursor.fetchone()[0] + 1
-        new_id = f"FB_USER_{cnt:05d}"
-        student_id = req.student_id or f"STU_USER_{cnt:04d}"
-        today_str = datetime.now().strftime("%Y-%m-%d")
+    # 5. Generate Unique IDs and Persist
+    try:
+        import time
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT MAX(rowid) FROM Feedback")
+            max_row = cursor.fetchone()[0] or 0
+            new_id = f"FB_USER_{max_row + 1:05d}"
+            cursor.execute("SELECT 1 FROM Feedback WHERE feedback_id = ?", (new_id,))
+            if cursor.fetchone():
+                new_id = f"FB_USER_{int(time.time() * 1000)}"
+            student_id = req.student_id or f"STU_USER_{max_row + 1:04d}"
+            today_str = datetime.now().strftime("%Y-%m-%d")
 
-        # 6. Insert Feedback
-        cursor.execute("""
-            INSERT INTO Feedback (feedback_id, student_id, course_id, course_name, semester, date, language, rating, feedback_text, cleaned_text)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """, (new_id, student_id, req.course_id, req.course_name, req.semester, today_str, detected_lang, req.rating, raw_text, cleaned))
-
-        # 7. Insert Sentiment
-        cursor.execute("""
-            INSERT INTO Sentiment (feedback_id, sentiment, confidence, polarity_score)
-            VALUES (?, ?, ?, ?)
-        """, (new_id, overall_sent, overall_conf, polarity))
-
-        # 8. Insert Aspects
-        for asp in detected_aspects:
+            # 6. Insert Feedback
             cursor.execute("""
-                INSERT INTO Aspect (feedback_id, aspect, sentiment, confidence, evidence_snippet)
-                VALUES (?, ?, ?, ?, ?)
-            """, (new_id, asp["aspect"], asp["sentiment"], asp["confidence"], asp["evidence_snippet"]))
+                INSERT INTO Feedback (feedback_id, student_id, course_id, course_name, semester, date, language, rating, feedback_text, cleaned_text)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, (new_id, student_id, req.course_id, req.course_name, req.semester, today_str, str(detected_lang), int(req.rating), raw_text, cleaned))
 
-        # 9. Assign Topic
-        topic_name = "User Submitted Feedback"
-        if detected_aspects:
-            topic_name = f"{detected_aspects[0]['aspect']} Discussion"
-        cursor.execute("""
-            INSERT INTO Topic (feedback_id, topic_id, topic_name, probability)
-            VALUES (?, ?, ?, ?)
-        """, (new_id, 99, topic_name, 0.95))
+            # 7. Insert Sentiment
+            cursor.execute("""
+                INSERT INTO Sentiment (feedback_id, sentiment, confidence, polarity_score)
+                VALUES (?, ?, ?, ?)
+            """, (new_id, str(overall_sent), float(overall_conf), float(polarity)))
 
-        conn.commit()
+            # 8. Insert Aspects
+            for asp in detected_aspects:
+                cursor.execute("""
+                    INSERT INTO Aspect (feedback_id, aspect, sentiment, confidence, evidence_snippet)
+                    VALUES (?, ?, ?, ?, ?)
+                """, (new_id, str(asp["aspect"]), str(asp["sentiment"]), float(asp["confidence"]), str(asp["evidence_snippet"])))
+
+            # 9. Assign Topic
+            topic_name = "User Submitted Feedback"
+            if detected_aspects:
+                topic_name = f"{detected_aspects[0]['aspect']} Discussion"
+            cursor.execute("""
+                INSERT INTO Topic (feedback_id, topic_id, topic_name, probability)
+                VALUES (?, ?, ?, ?)
+            """, (new_id, 99, topic_name, 0.95))
+
+            conn.commit()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Database error saving feedback: {str(e)}")
 
     return {
         "status": "success",

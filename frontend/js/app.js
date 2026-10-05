@@ -515,8 +515,12 @@ async function handleAddFeedbackSubmit(e) {
         });
 
         if (!res.ok) {
-            const err = await res.json();
-            throw new Error(err.detail || 'Failed to submit feedback');
+            let errorMsg = 'Failed to submit feedback';
+            try {
+                const err = await res.json();
+                errorMsg = err.detail || errorMsg;
+            } catch (_) {}
+            throw new Error(errorMsg);
         }
 
         const data = await res.json();
@@ -528,7 +532,11 @@ async function handleAddFeedbackSubmit(e) {
         loadOverview();
 
     } catch (err) {
-        showToast(err.message, 'error');
+        if (err.message && (err.message.includes('fetch') || err.message.includes('NetworkError'))) {
+            showToast('Backend Server Offline! Please run "python server.py" in VS Code terminal.', 'error');
+        } else {
+            showToast(err.message, 'error');
+        }
     } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = '<i class="fas fa-check"></i> Analyze & Save Feedback';
@@ -717,7 +725,21 @@ function setupEventListeners() {
 }
 
 // Toast System
+const recentToastMessages = new Set();
 function showToast(message, type = 'info') {
+    if (!message) return;
+
+    // Friendly message if server is offline
+    if (typeof message === 'string' && (message.includes('fetch') || message.includes('Failed to fetch') || message.includes('NetworkError'))) {
+        message = 'Backend Server is Offline! Please run "python server.py" in VS Code terminal.';
+        type = 'error';
+    }
+
+    const key = `${type}:${message}`;
+    if (recentToastMessages.has(key)) return;
+    recentToastMessages.add(key);
+    setTimeout(() => recentToastMessages.delete(key), 3500);
+
     let container = document.getElementById('toast-container');
     if (!container) {
         container = document.createElement('div');
@@ -736,7 +758,7 @@ function showToast(message, type = 'info') {
         toast.style.opacity = '0';
         toast.style.transform = 'translateX(50px)';
         setTimeout(() => toast.remove(), 300);
-    }, 4000);
+    }, 4500);
 }
 
 function escapeHtml(str) {
