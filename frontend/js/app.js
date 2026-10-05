@@ -135,8 +135,8 @@ function switchTab(tabId) {
         document.getElementById('header-subtitle').textContent = titleMap[tabId].subtitle;
     }
 
-    // Load data for specific tab if needed
-    if (tabId === 'overview' && !AppState.overviewData) loadOverview();
+    // Always load fresh data for the active tab
+    if (tabId === 'overview') loadOverview();
     if (tabId === 'aspects') loadAspects();
     if (tabId === 'drift') loadDrift();
     if (tabId === 'feedback') loadFeedback();
@@ -278,6 +278,13 @@ async function loadAspects() {
         AppState.aspectsData = data;
 
         ChartManager.renderAspectsBar('chart-aspects-bar', data.aspects_summary);
+
+        // Update Total Mentions Badge
+        const totalMentions = (data.aspects_summary || []).reduce((acc, curr) => acc + (curr.total || 0), 0);
+        const badge = document.getElementById('absa-total-badge');
+        if (badge) {
+            badge.innerHTML = `<i class="fas fa-layer-group"></i> ${totalMentions.toLocaleString()} Total Mentions`;
+        }
 
         // Render Strengths & Pain Points
         const strengthsList = document.getElementById('aspects-strengths-list');
@@ -490,9 +497,17 @@ async function deleteFeedbackRecord(feedbackId) {
         const data = await res.json();
 
         showToast(data.message, 'success');
-        loadFeedback();
-        // Also refresh overview numbers
-        loadOverview();
+        
+        // Invalidate cache and reload all views
+        AppState.overviewData = null;
+        AppState.aspectsData = null;
+        AppState.driftData = null;
+        await Promise.all([
+            loadFeedback(),
+            loadOverview(),
+            loadAspects(),
+            loadDrift()
+        ]);
     } catch (err) {
         showToast('Error deleting record: ' + err.message, 'error');
     }
@@ -571,9 +586,18 @@ async function handleAddFeedbackSubmit(e) {
         showToast(`Feedback saved! Detected ${data.record.language} with ${data.record.overall_sentiment} sentiment.`, 'success');
 
         closeAddModal();
-        // Refresh both feedback list and dashboard metrics
-        loadFeedback();
-        loadOverview();
+        // Invalidate cached datasets so every chart refreshes from SQLite DB
+        AppState.overviewData = null;
+        AppState.aspectsData = null;
+        AppState.driftData = null;
+
+        // Refresh all views immediately
+        await Promise.all([
+            loadFeedback(),
+            loadOverview(),
+            loadAspects(),
+            loadDrift()
+        ]);
 
     } catch (err) {
         if (err.message && (err.message.includes('fetch') || err.message.includes('NetworkError'))) {
