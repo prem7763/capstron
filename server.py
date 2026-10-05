@@ -336,10 +336,11 @@ def add_new_feedback(req: NewFeedbackRequest):
             today_str = datetime.now().strftime("%Y-%m-%d")
 
             # 6. Insert Feedback
+            sem_clean = req.semester.replace("Semester ", "Sem ").strip()
             cursor.execute("""
                 INSERT INTO Feedback (feedback_id, student_id, course_id, course_name, semester, date, language, rating, feedback_text, cleaned_text)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """, (new_id, student_id, req.course_id, req.course_name, req.semester, today_str, str(detected_lang), int(req.rating), raw_text, cleaned))
+            """, (new_id, student_id, req.course_id, req.course_name, sem_clean, today_str, str(detected_lang), int(req.rating), raw_text, cleaned))
 
             # 7. Insert Sentiment
             cursor.execute("""

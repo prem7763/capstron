@@ -310,7 +310,7 @@ const ChartManager = {
 
         const datasets = seriesList.map((item, idx) => ({
             label: item.topic_name,
-            data: item.data.map(v => (v * 100).toFixed(1)),
+            data: item.data.map(v => Number(v).toFixed(1)),
             borderColor: palette[idx % palette.length],
             backgroundColor: 'transparent',
             borderWidth: 2.5,

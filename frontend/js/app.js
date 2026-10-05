@@ -371,20 +371,29 @@ async function loadDrift() {
         const tbody = document.getElementById('drift-tbody');
         if (tbody) {
             tbody.innerHTML = data.classifications.map(t => {
+                const topicName = t.topic_name || t.Topic_Name || 'Unknown Topic';
+                const status = t.status || t.Overall_Classification || 'Persistent';
+                const startPct = t.first_sem_pct != null ? Number(t.first_sem_pct) : (t.Start_Share_Pct != null ? Number(t.Start_Share_Pct) : 0);
+                const endPct = t.last_sem_pct != null ? Number(t.last_sem_pct) : (t.End_Share_Pct != null ? Number(t.End_Share_Pct) : 0);
+                const deltaPct = t.net_change_pct != null ? Number(t.net_change_pct) : (t.Delta_Pct_Points != null ? Number(t.Delta_Pct_Points) : (endPct - startPct));
+                const slopePct = t.slope != null ? (Number(t.slope) * 100) : (deltaPct / 5.0);
+
                 let badgeClass = 'badge-neutral';
                 let icon = 'fas fa-minus';
-                if (t.status === 'Emerging') { badgeClass = 'badge-negative'; icon = 'fas fa-arrow-trend-up'; }
-                if (t.status === 'Declining') { badgeClass = 'badge-positive'; icon = 'fas fa-arrow-trend-down'; }
-                if (t.status === 'New') { badgeClass = 'badge-aspect'; icon = 'fas fa-star'; }
+                if (status === 'Emerging') { badgeClass = 'badge-negative'; icon = 'fas fa-arrow-trend-up'; }
+                if (status === 'Declining') { badgeClass = 'badge-positive'; icon = 'fas fa-arrow-trend-down'; }
+                if (status === 'New') { badgeClass = 'badge-aspect'; icon = 'fas fa-star'; }
+
+                const sign = deltaPct > 0 ? '+' : '';
 
                 return `
                     <tr>
-                        <td><strong>${t.topic_name}</strong></td>
-                        <td><span class="badge ${badgeClass}"><i class="${icon}"></i> ${t.status}</span></td>
-                        <td>${(t.slope * 100).toFixed(2)}% / sem</td>
-                        <td>${(t.first_sem_pct * 100).toFixed(1)}%</td>
-                        <td>${(t.last_sem_pct * 100).toFixed(1)}%</td>
-                        <td><strong>${(t.net_change_pct * 100).toFixed(1)}%</strong></td>
+                        <td><strong>${escapeHtml(topicName)}</strong></td>
+                        <td><span class="badge ${badgeClass}"><i class="${icon}"></i> ${status}</span></td>
+                        <td>${slopePct >= 0 ? '+' : ''}${slopePct.toFixed(2)}% / sem</td>
+                        <td>${startPct.toFixed(1)}%</td>
+                        <td>${endPct.toFixed(1)}%</td>
+                        <td><strong>${sign}${deltaPct.toFixed(1)}%</strong></td>
                     </tr>
                 `;
             }).join('');
