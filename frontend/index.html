@@ -58,10 +58,6 @@
                     <i class="fas fa-flask"></i>
                     <span>Live AI Sandbox</span>
                 </a>
-                <a href="#viva" class="nav-item" data-tab="viva" id="nav-viva">
-                    <i class="fas fa-file-pdf"></i>
-                    <span>Viva & Documentation</span>
-                </a>
             </nav>
 
             <div class="sidebar-footer">
@@ -502,81 +498,6 @@
                                 </div>
                                 <div id="sandbox-aspects-list">
                                     <div style="color:var(--text-muted); font-size:0.85rem;">Click 'Analyze' to extract pedagogical aspects.</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- TAB 6: VIVA DOCUMENTATION & ARCHITECTURE -->
-                <section class="tab-pane" id="tab-viva">
-                    <div class="chart-grid-2" style="margin-bottom:28px;">
-                        <!-- English PDF Card -->
-                        <div class="glass-card" style="border-left: 4px solid var(--primary);">
-                            <div class="card-header">
-                                <h3 class="card-title"><i class="fas fa-file-pdf"></i> Complete Viva Documentation (English)</h3>
-                                <span class="card-badge">Formal Academic Report</span>
-                            </div>
-                            <p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:18px;">
-                                Professional academic viva documentation covering research problem, methodology, mathematical formulations, Pipeline A vs B comparison, and evaluation benchmarks.
-                            </p>
-                            <a href="/api/download/pdf/english" class="btn btn-primary" download>
-                                <i class="fas fa-download"></i> Download English Viva PDF
-                            </a>
-                        </div>
-
-                        <!-- Hinglish PDF Card -->
-                        <div class="glass-card" style="border-left: 4px solid var(--secondary);">
-                            <div class="card-header">
-                                <h3 class="card-title"><i class="fas fa-file-lines"></i> Viva Preparation Guide (Hinglish)</h3>
-                                <span class="card-badge">Intuitive Viva Q&A</span>
-                            </div>
-                            <p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:18px;">
-                                Complete viva preparation guide in intuitive Hinglish with anticipated examiner questions, counter-arguments, and easy-to-understand explanations.
-                            </p>
-                            <a href="/api/download/pdf/hinglish" class="btn btn-secondary" download>
-                                <i class="fas fa-download"></i> Download Hinglish Viva PDF
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- System Architecture Summary -->
-                    <div class="glass-card">
-                        <div class="card-header">
-                            <h3 class="card-title"><i class="fas fa-network-wired"></i> End-to-End System Architecture</h3>
-                            <span class="card-badge">Production Capstone Design</span>
-                        </div>
-
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 10px;">
-                            <div class="insight-item">
-                                <div class="insight-icon" style="color:var(--primary);"><i class="fas fa-database"></i></div>
-                                <div class="insight-content">
-                                    <h4>1. Multilingual Corpus</h4>
-                                    <p>2,200 synthetic student evaluations across 7 courses, 6 semesters, and 3 languages (EN, HI, Hinglish).</p>
-                                </div>
-                            </div>
-
-                            <div class="insight-item">
-                                <div class="insight-icon" style="color:var(--secondary);"><i class="fas fa-spell-check"></i></div>
-                                <div class="insight-content">
-                                    <h4>2. Trilingual Preprocessor</h4>
-                                    <p>Negation preservation ("nahi", "mat", "not"), Unicode Devanagari normalization, and phoneme mapping.</p>
-                                </div>
-                            </div>
-
-                            <div class="insight-item">
-                                <div class="insight-icon" style="color:var(--color-positive);"><i class="fas fa-filter"></i></div>
-                                <div class="insight-content">
-                                    <h4>3. 12-Aspect ABSA Engine</h4>
-                                    <p>Comprehensive rule & semantic lexicon mapping capturing Course Content, Labs, Grading, Instructor, etc.</p>
-                                </div>
-                            </div>
-
-                            <div class="insight-item">
-                                <div class="insight-icon" style="color:var(--accent-purple);"><i class="fas fa-chart-area"></i></div>
-                                <div class="insight-content">
-                                    <h4>4. BERTopic Temporal Drift</h4>
-                                    <p>Classifies topics into Emerging, Declining, Persistent, and New based on linear regression slopes across semesters.</p>
                                 </div>
                             </div>
                         </div>

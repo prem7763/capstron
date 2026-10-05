@@ -127,8 +127,7 @@ function switchTab(tabId) {
         'aspects': { title: '12-Aspect Sentiment Breakdown', subtitle: 'Granular pedagogical & infrastructure sentiment analytics' },
         'drift': { title: 'Temporal Topic Drift & Trends', subtitle: 'Tracking evolving curriculum concerns across 6 academic semesters' },
         'feedback': { title: 'Student Feedback Management', subtitle: 'Interactive CRUD database explorer with real-time NLP classification' },
-        'sandbox': { title: 'Interactive AI Sandbox Playground', subtitle: 'Test live multilingual NLP inference on any Hindi, Hinglish, or English sentence' },
-        'viva': { title: 'Viva Documentation & Architecture', subtitle: 'Complete capstone project documentation, viva questions & technical specs' }
+        'sandbox': { title: 'Interactive AI Sandbox Playground', subtitle: 'Test live multilingual NLP inference on any Hindi, Hinglish, or English sentence' }
     };
 
     if (titleMap[tabId]) {
